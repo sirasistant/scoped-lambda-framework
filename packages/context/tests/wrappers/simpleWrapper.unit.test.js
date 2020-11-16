@@ -8,7 +8,7 @@ beforeAll(() => {
 	logger.level = 'info';
 });
 
-it('Parent context should be inmutable for executions of the same lambda', async () => {
+it('Parent context should be the same for executions of the same lambda', async () => {
 	class TestLambda {
 		processEvent() {
 			return [...Context.getContextHierarchy()].reverse();

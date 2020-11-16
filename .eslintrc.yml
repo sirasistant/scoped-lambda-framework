@@ -1,0 +1,41 @@
+root: true
+parser: '@babel/eslint-parser'
+parserOptions:
+  ecmaFeatures:
+    legacyDecorators: true
+  babelOptions:
+    rootMode: upward
+env:
+  node: true
+  jest: true
+
+plugins:
+  - jest
+
+extends:
+  - airbnb-base
+  - plugin:jest/recommended
+
+rules:
+  no-tabs:
+    - error
+    - allowIndentationTabs: true
+  no-return-await: off # This rule does not make sense, awaiting in a return changes the behavior of the async function in many cases.
+  no-plusplus: off 
+  no-underscore-dangle: off
+  no-await-in-loop: off # WTF, this is the equivalent of forbidding promise.all (series vs parallel)
+  class-methods-use-this: off 
+  no-param-reassign: off
+  no-empty-function: off
+  func-names: off
+  no-bitwise: off
+  max-classes-per-file: off
+  import/no-extraneous-dependencies: off
+  indent: ['error', "tab"]
+  max-statements: ['error', 25]
+  max-len: ['error', {code: 160} ]
+  no-use-before-define: ['error', 'nofunc']
+  no-restricted-syntax:
+    - error
+    - selector: CallExpression[callee.object.name='logger'][callee.property.name='error'][arguments.length < 2]
+      message: logger.error must always be invoked with at least two parameters, a message and an Error object.

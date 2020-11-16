@@ -1,0 +1,41 @@
+{
+  "name": "@scoped-lambda/root",
+  "version": "0.0.1",
+  "description": "A simple aws lambda framework",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.12.3",
+    "@babel/eslint-parser": "^7.12.1",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-decorators": "^7.12.1",
+    "@babel/plugin-proposal-private-methods": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "babel-plugin-rewire": "^1.2.0",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.3",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "jest": "^26.6.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sirasistant/scoped-lambda-framework.git"
+  },
+  "keywords": [
+    "aws",
+    "lambda",
+    "framework"
+  ],
+  "author": "alvaro.r.villalba@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sirasistant/scoped-lambda-framework/issues"
+  },
+  "homepage": "https://github.com/sirasistant/scoped-lambda-framework#readme"
+}

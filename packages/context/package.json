@@ -1,0 +1,37 @@
+{
+	"name": "@scoped-lambda/context",
+	"version": "0.0.1",
+	"description": "",
+	"main": "index.js",
+	"dependencies": {
+		"camelcase": "^6.2.0",
+		"cls-hooked": "^4.2.2",
+		"uuid": "^8.3.1"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.0.0",
+		"eslint": "^7.2.0",
+		"jest": "^26.6.3",
+		"winston": "^3.3.3"
+	},
+	"scripts": {
+		"clean": "rm -rf node_modules node_modules_all dist",
+		"build": "npm run build:init && npm run lint && npm run build:js && npm run build:install",
+		"build:init": "npm install; rm -rf ./dist && mkdir -p ./dist/src",
+		"build:js": "[ ! -e src ] || npx babel --root-mode upward src -d ./dist/src --copy-files && npx babel --root-mode upward index.js --out-file ./dist/index.js",
+		"build:install": "mv node_modules node_modules_all; npm install --production; cp -LR ./node_modules ./dist; rm -rf node_modules; mv node_modules_all node_modules",
+		"lint": "npx eslint src",
+		"test:unit": "TEST_TYPE=unit npx jest --coverage --testPathPattern=tests/.*unit\\.test",
+		"test": "npm run test:unit"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sirasistant/scoped-lambda-framework.git"
+	},
+	"author": "alvaro.r.villalba@gmail.com",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/sirasistant/scoped-lambda-framework/issues"
+	},
+	"homepage": "https://github.com/sirasistant/scoped-lambda-framework#readme"
+}

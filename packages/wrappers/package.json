@@ -1,11 +1,11 @@
 {
-	"name": "@scoped-lambda/context",
+	"name": "@scoped-lambda/wrappers",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
 	"dependencies": {
-		"cls-hooked": "^4.2.2",
-		"uuid": "^8.3.1"
+		"@scoped-lambda/context": "^1.0.0",
+		"@scoped-lambda/injectable": "^1.0.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.0.0",

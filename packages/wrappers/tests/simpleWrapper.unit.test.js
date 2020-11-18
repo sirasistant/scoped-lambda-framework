@@ -1,4 +1,4 @@
-import { Context, logger, setLogger } from '@scoped-lambda/context';
+import { Context, logger, setLogger } from 'scoped-lambda-context';
 import createTestLogger from './testLogger';
 import SimpleWrapper from '../src/simpleWrapper';
 

@@ -1,5 +1,5 @@
 import { v1 as uuidv1 } from 'uuid';
-import { Context, logger } from '@scoped-lambda/context';
+import { Context, logger } from 'scoped-lambda-context';
 import injectableMetadataStore from './injectableMetadataStore';
 import { TRANSIENT_SCOPE } from './injectable';
 

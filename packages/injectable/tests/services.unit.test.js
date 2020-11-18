@@ -1,6 +1,6 @@
 import {
 	Context, LIFECYCLE_SCOPES, logger, setLogger,
-} from '@scoped-lambda/context';
+} from 'scoped-lambda-context';
 import createTestLogger from './testLogger';
 import Injectable, { TRANSIENT_SCOPE } from '../src/injectable';
 import Inject from '../src/inject';

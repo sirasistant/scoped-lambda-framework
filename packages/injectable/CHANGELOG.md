@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.1](https://github.com/sirasistant/scoped-lambda-framework/compare/v1.1.0...v1.1.1) (2020-11-18)
 
-**Note:** Version bump only for package @scoped-lambda/injectable
+**Note:** Version bump only for package scoped-lambda-injectable
 
 
 

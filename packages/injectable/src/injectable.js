@@ -1,5 +1,5 @@
 import camelcase from 'camelcase';
-import { LIFECYCLE_SCOPES, logger } from '@scoped-lambda/context';
+import { LIFECYCLE_SCOPES, logger } from 'scoped-lambda-context';
 import injectableMetadataStore from './injectableMetadataStore';
 
 export default function Injectable(injectableMetadata) {

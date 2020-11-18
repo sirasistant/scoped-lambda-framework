@@ -1,5 +1,5 @@
 import camelcase from 'camelcase';
-import { Context, logger } from '@scoped-lambda/context';
+import { Context, logger } from 'scoped-lambda-context';
 
 export default class Service {
 	async init() {

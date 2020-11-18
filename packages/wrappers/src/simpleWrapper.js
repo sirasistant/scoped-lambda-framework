@@ -1,4 +1,4 @@
-import { Context, LIFECYCLE_SCOPES } from '@scoped-lambda/context';
+import { Context, LIFECYCLE_SCOPES } from 'scoped-lambda-context';
 
 export default class SimpleWrapper {
 	static wrapClass(clazz, ...opts) {

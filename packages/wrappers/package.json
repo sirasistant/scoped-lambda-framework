@@ -1,11 +1,11 @@
 {
-	"name": "@scoped-lambda/wrappers",
+	"name": "scoped-lambda-wrappers",
 	"version": "1.1.1",
 	"description": "",
 	"main": "index.js",
 	"dependencies": {
-		"@scoped-lambda/context": "^1.1.1",
-		"@scoped-lambda/injectable": "^1.1.1"
+		"scoped-lambda-context": "^1.1.1",
+		"scoped-lambda-injectable": "^1.1.1"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.0.0",
@@ -33,5 +33,6 @@
 	"bugs": {
 		"url": "https://github.com/sirasistant/scoped-lambda-framework/issues"
 	},
-	"homepage": "https://github.com/sirasistant/scoped-lambda-framework#readme"
+	"homepage": "https://github.com/sirasistant/scoped-lambda-framework#readme",
+	"gitHead": "20d19f678cf3cdc7d2a99503c7f8ae828a7281dc"
 }

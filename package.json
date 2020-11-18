@@ -1,5 +1,5 @@
 {
-	"name": "@scoped-lambda/root",
+	"name": "scoped-lambda-root",
 	"version": "1.0.0",
 	"description": "A simple aws lambda framework",
 	"devDependencies": {

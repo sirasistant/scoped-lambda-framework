@@ -14,7 +14,7 @@
 		"winston": "^3.3.3"
 	},
 	"scripts": {
-		"clean": "rm -rf node_modules node_modules_all dist",
+		"clean": "rm -rf node_modules_all dist",
 		"build": "npm run build:init && npm run lint && npm run build:js && npm run build:install",
 		"build:init": "npm install; rm -rf ./dist && mkdir -p ./dist/src",
 		"build:js": "[ ! -e src ] || npx babel --root-mode upward src -d ./dist/src --copy-files && npx babel --root-mode upward index.js --out-file ./dist/index.js",
@@ -22,7 +22,8 @@
 		"lint": "npx eslint src",
 		"test:unit": "TEST_TYPE=unit npx jest --coverage --testPathPattern=tests/.*unit\\.test",
 		"test": "npm run test:unit",
-		"prepublishOnly": "npm run build && cp package.json ./dist"
+		"prepublishOnly": "npm run build && cp package.json ./dist",
+		"postpublish": "npm run clean"
 	},
 	"repository": {
 		"type": "git",

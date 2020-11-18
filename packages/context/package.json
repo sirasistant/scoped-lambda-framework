@@ -21,7 +21,8 @@
 		"build:install": "mv node_modules node_modules_all; npm install --production; cp -LR ./node_modules ./dist; rm -rf node_modules; mv node_modules_all node_modules",
 		"lint": "npx eslint src",
 		"test:unit": "TEST_TYPE=unit npx jest --coverage --testPathPattern=tests/.*unit\\.test",
-		"test": "npm run test:unit"
+		"test": "npm run test:unit",
+		"prepublishOnly": "npm run build && cp package.json ./dist"
 	},
 	"repository": {
 		"type": "git",

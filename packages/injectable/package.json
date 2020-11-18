@@ -1,10 +1,10 @@
 {
 	"name": "@scoped-lambda/injectable",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "",
 	"main": "index.js",
 	"dependencies": {
-		"@scoped-lambda/context": "^1.1.0",
+		"@scoped-lambda/context": "^1.1.1",
 		"camelcase": "^6.2.0"
 	},
 	"devDependencies": {

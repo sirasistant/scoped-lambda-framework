@@ -1,6 +1,5 @@
 import camelcase from 'camelcase';
-import Context from './context';
-import logger from './logger';
+import { Context, logger } from '@scoped-lambda/context';
 
 export default class Service {
 	async init() {
@@ -22,11 +21,11 @@ export default class Service {
 		}
 	}
 
-	async onContextEnd(contextName, context) {
+	async onContextEnd(contextName, context, parentContext) {
 		logger.debug(this.constructor.name, 'OnContextEnd', contextName);
 		const methodName = camelcase(`ON_${contextName}_CONTEXT_END`);
 		if (this[methodName]) {
-			await this[methodName](context);
+			await this[methodName](context, parentContext);
 		}
 	}
 }

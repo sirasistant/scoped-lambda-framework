@@ -25,7 +25,7 @@ export default class Context {
 			for (const variableKey in subContext) { // eslint-disable-line guard-for-in
 				const variable = subContext[variableKey];
 				if (variable && variable.onContextEnd) {
-					await variable.onContextEnd(subContextName, subContext);
+					await variable.onContextEnd(subContextName, subContext, parentContext);
 				}
 			}
 			logger.debug('Ended context', subContextName);

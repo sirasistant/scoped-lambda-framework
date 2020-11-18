@@ -1,12 +1,12 @@
-import Injectable, { TRANSIENT_SCOPE } from '../src/injection/injectable';
-import Inject from '../src/injection/inject';
-import Context from '../src/context';
-import lifecycleScopes from '../src/lifecycleScopes';
-import Service from '../src/service';
-import getInjectable from '../src/injection/getInjectable';
-import logger, { setLogger } from '../src/logger';
+import {
+	Context, LIFECYCLE_SCOPES, logger, setLogger,
+} from '@scoped-lambda/context';
 import createTestLogger from './testLogger';
-import AutoRegisterInjectable from '../src/injection/autoRegisterInjectable';
+import Injectable, { TRANSIENT_SCOPE } from '../src/injectable';
+import Inject from '../src/inject';
+import Service from '../src/service';
+import getInjectable from '../src/getInjectable';
+import AutoRegisterInjectable from '../src/autoRegisterInjectable';
 
 class StoreDeps {
 	constructor(...deps) {
@@ -42,7 +42,7 @@ it('Should inject dependencies', async () => {
 			expect(this.fakeTopLevelDependency.deps[1] instanceof FakeSecondLevelDependency).toBeTruthy();
 		}
 	}
-	await Context.startSubContext(lifecycleScopes.EXECUTION, async () => {
+	await Context.startSubContext(LIFECYCLE_SCOPES.EXECUTION, async () => {
 		const fakeLambda = new FakeLambda();
 		await fakeLambda.processEvent();
 	});
@@ -52,7 +52,7 @@ it('Should attach injectables to the correct scopes', async () => {
 	@AutoRegisterInjectable
 	@Injectable({
 		dependencies: ['fakeExecutionDependency'],
-		scope: lifecycleScopes.EVENT,
+		scope: LIFECYCLE_SCOPES.EVENT,
 	})
 	class FakeEventDependency extends StoreDeps {}
 
@@ -67,10 +67,10 @@ it('Should attach injectables to the correct scopes', async () => {
 			expect((await getInjectable('fakeExecutionDependency')) instanceof FakeExecutionDependency).toBeTruthy();
 		}
 	}
-	await Context.startSubContext(lifecycleScopes.EXECUTION, async () => {
+	await Context.startSubContext(LIFECYCLE_SCOPES.EXECUTION, async () => {
 		const fakeLambda = new FakeLambda();
 
-		await Context.startSubContext(lifecycleScopes.EVENT, async () => {
+		await Context.startSubContext(LIFECYCLE_SCOPES.EVENT, async () => {
 			await fakeLambda.processEvent();
 		});
 
@@ -87,7 +87,7 @@ it('Should attach injectables to the correct scopes', async () => {
 it('Should fail with injectables that depend on others with higher scopes', async () => {
 	@AutoRegisterInjectable
 	@Injectable({
-		scope: lifecycleScopes.EVENT,
+		scope: LIFECYCLE_SCOPES.EVENT,
 	})
 	class FakeEventDependency extends StoreDeps {}
 
@@ -102,10 +102,10 @@ it('Should fail with injectables that depend on others with higher scopes', asyn
 		async processEvent() {
 		}
 	}
-	await Context.startSubContext(lifecycleScopes.EXECUTION, async () => {
+	await Context.startSubContext(LIFECYCLE_SCOPES.EXECUTION, async () => {
 		const fakeLambda = new FakeLambda();
 
-		await Context.startSubContext(lifecycleScopes.EVENT, async () => {
+		await Context.startSubContext(LIFECYCLE_SCOPES.EVENT, async () => {
 			await expect(fakeLambda.processEvent()).rejects.toThrow(new Error('Cannot locate injectable with scope EVENT within a scope EXECUTION'));
 		});
 	});
@@ -137,10 +137,10 @@ it('Should call lifecycle events in services built before the subcontext is star
 			return true;
 		}
 	}
-	await Context.startSubContext(lifecycleScopes.EXECUTION, async () => {
+	await Context.startSubContext(LIFECYCLE_SCOPES.EXECUTION, async () => {
 		const fakeLambda = new FakeLambda();
 
-		await Context.startSubContext(lifecycleScopes.EVENT, async () => {
+		await Context.startSubContext(LIFECYCLE_SCOPES.EVENT, async () => {
 			expect(await fakeLambda.processEvent()).toBe(true);
 		});
 	});
@@ -163,10 +163,10 @@ it('Should handle transient injectables', async () => {
 		}
 	}
 
-	await Context.startSubContext(lifecycleScopes.EXECUTION, async () => {
+	await Context.startSubContext(LIFECYCLE_SCOPES.EXECUTION, async () => {
 		const fakeLambda = new FakeLambda();
 
-		await Context.startSubContext(lifecycleScopes.EVENT, async () => {
+		await Context.startSubContext(LIFECYCLE_SCOPES.EVENT, async () => {
 			await fakeLambda.processEvent();
 		});
 	});
@@ -178,7 +178,7 @@ it('Should throw if injecting unknown injectables', async () => {
 		async processEvent() {}
 	}
 
-	await Context.startSubContext(lifecycleScopes.EXECUTION, async () => {
+	await Context.startSubContext(LIFECYCLE_SCOPES.EXECUTION, async () => {
 		const fakeLambda = new FakeLambda();
 
 		await expect(fakeLambda.processEvent()).rejects.toThrow(new Error('Unknown injectable unexistingDependency'));
@@ -191,7 +191,7 @@ it('Should handle misusing injectable decorator', async () => {
 		@Injectable
 		async processEvent() {}
 	}
-	await Context.startSubContext(lifecycleScopes.EXECUTION, async () => {
+	await Context.startSubContext(LIFECYCLE_SCOPES.EXECUTION, async () => {
 		const lambda = new FakeLambda();
 
 		await lambda.processEvent();

@@ -1,7 +1,6 @@
-import Context from '../../src/context';
-import logger, { setLogger } from '../../src/logger';
-import SimpleWrapper from '../../src/wrappers/simpleWrapper';
-import createTestLogger from '../testLogger';
+import { Context, logger, setLogger } from '@scoped-lambda/context';
+import createTestLogger from './testLogger';
+import SimpleWrapper from '../src/simpleWrapper';
 
 beforeAll(() => {
 	setLogger(createTestLogger());

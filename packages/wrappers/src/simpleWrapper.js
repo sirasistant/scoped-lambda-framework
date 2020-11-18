@@ -1,9 +1,8 @@
-import Context from '../context';
-import lifecycleScopes from '../lifecycleScopes';
+import { Context, LIFECYCLE_SCOPES } from '@scoped-lambda/context';
 
 export default class SimpleWrapper {
 	static wrapClass(clazz, ...opts) {
-		const parentContext = Context.createParentContext(lifecycleScopes.EXECUTION);
+		const parentContext = Context.createParentContext(LIFECYCLE_SCOPES.EXECUTION);
 		const { externalInterface } = new SimpleWrapper(clazz, parentContext, ...opts);
 		return externalInterface;
 	}
@@ -20,7 +19,7 @@ export default class SimpleWrapper {
 			await this.initializeParentContext();
 		}
 		return Context.startSubContext(
-			lifecycleScopes.EVENT,
+			LIFECYCLE_SCOPES.EVENT,
 			async () => this.handleAwsEvent(event, awsContext),
 		);
 	}

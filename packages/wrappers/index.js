@@ -1,1 +1,1 @@
-export { default as SimpleWrapper } from './src/simpleWrapper'; // eslint-disable-line import/prefer-default-export
+export { default as LambdaWrapper } from './src/lambdaWrapper'; // eslint-disable-line import/prefer-default-export

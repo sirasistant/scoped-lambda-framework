@@ -10,7 +10,9 @@ export default class Context {
 		throw new Error('Context is not instantiable');
 	}
 
-	static async #runSubContext (subContext, subContextName, contextFunction, parentContext) {
+	static async #runSubContext (subContext, subContextName, contextFunction, parentContext, initializationFunction = () => {}) {
+		// Run the provided initialization function for preparing the context
+		await initializationFunction(subContext);
 		// A for-in is needed, we want items from the protype chain
 		for (const variableKey in subContext) { // eslint-disable-line guard-for-in
 			const variable = subContext[variableKey];
@@ -36,14 +38,14 @@ export default class Context {
 		context[this.CONTEXT_NAME_KEY] = name;
 	}
 
-	static async startSubContext(subcontextScope, contextFunction) {
+	static async startSubContext(subcontextScope, contextBody, contextInitialization) {
 		logger.debug('Starting context', subcontextScope);
 		const parentContext = this.getCurrentContext();
 
 		return new Promise((resolve, reject) => {
 			contextNamespace.run((subContext) => {
 				this.#setContextProperties(subContext, subcontextScope);
-				this.#runSubContext(subContext, subcontextScope, contextFunction, parentContext).then(resolve).catch(reject);
+				this.#runSubContext(subContext, subcontextScope, contextBody, parentContext, contextInitialization).then(resolve).catch(reject);
 			});
 		});
 	}

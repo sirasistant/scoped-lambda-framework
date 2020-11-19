@@ -1,22 +1,28 @@
 import { Context, logger, setLogger } from 'scoped-lambda-context';
 import createTestLogger from './testLogger';
-import SimpleWrapper from '../src/simpleWrapper';
+import LambdaWrapper from '../src/lambdaWrapper';
+
+const invokedFunctionArn = 'arn:aws:lambda:region:account:function:functionName:alias';
 
 beforeAll(() => {
 	setLogger(createTestLogger());
 	logger.level = 'info';
+	process.env.ACCOUNT_ID = 'ACCOUNT_ID';
+	process.env.AWS_REGION = 'REGION';
+	process.env.STAGE = 'STAGE';
+	process.env.AWS_LAMBDA_FUNCTION_VERSION = '42';
 });
 
-it('Parent context should be the same for executions of the same lambda', async () => {
+it('Should have the same EXECUTION context for executions of the same lambda', async () => {
 	class TestLambda {
 		processEvent() {
 			return [...Context.getContextHierarchy()].reverse();
 		}
 	}
-	const wrapped = SimpleWrapper.wrapClass(TestLambda);
-	const firstCallContexts = await wrapped();
+	const wrapped = LambdaWrapper.wrapClass(TestLambda);
+	const firstCallContexts = await wrapped({}, { invokedFunctionArn });
 	expect(firstCallContexts.map((ctx) => Context.getContextName(ctx))).toEqual(['EXECUTION', 'EVENT']);
-	const secondCallContexts = await wrapped();
+	const secondCallContexts = await wrapped({}, { invokedFunctionArn });
 	expect(secondCallContexts.map((ctx) => Context.getContextName(ctx))).toEqual(['EXECUTION', 'EVENT']);
 	// Execution context should be the same
 	expect(firstCallContexts[0]).toBe(secondCallContexts[0]);

@@ -9,6 +9,7 @@
 		},
 		"version": {
 			"message": "[skip ci] chore(release): %v"
+			"conventionalCommits": true
 		}
 	}
 }

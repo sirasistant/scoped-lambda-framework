@@ -1,0 +1,38 @@
+language: node_js
+node_js:
+  - '12'
+install:
+  - npm ci
+
+cache:
+  npm: false
+
+git:
+  depth: false
+
+branches:
+  only:
+  - main
+
+stages:
+  # Pull request
+  - name: lint
+    if: type = pull_request
+  - name: test (unit)
+    if: type = pull_request
+
+  # Merge on main
+  - name: publish
+    if: type = push AND branch = main
+
+jobs:
+  include:
+    # Pull request
+    - stage: lint
+      script: npx lerna exec -- npm i && npx lerna run lint
+    - stage: test (unit)
+      script: npx lerna exec -- npm i && npx lerna run test:unit
+
+    # Merge on main
+    - stage: publish
+      script: npx lerna exec -- npm i && npx lerna publish --contents dist

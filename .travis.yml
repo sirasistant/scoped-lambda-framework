@@ -35,4 +35,4 @@ jobs:
 
     # Merge on main
     - stage: publish
-      script: git checkout main && npx lerna exec -- npm i && npx lerna publish --contents dist
+      script: git checkout main && npx lerna exec -- npm i && npx lerna publish --contents dist --yes

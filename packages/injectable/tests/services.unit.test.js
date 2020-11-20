@@ -146,6 +146,36 @@ it('Should call lifecycle events in services built before the subcontext is star
 	});
 });
 
+it('Should simulate lifecycle events in services built after the subcontext is started', async () => {
+	@AutoRegisterInjectable
+	@Injectable()
+	class FakeDependency extends Service {
+		async onExecutionContextStart() {
+			// The context here should be EXECUTION even though the injectable is created within EVENT
+			Context.setContextVariable('foo', 'bar');
+		}
+
+		async onEventContextStart() {
+			Context.setContextVariable('foo', 'baz');
+		}
+	}
+
+	class FakeLambda {
+		@Inject('fakeDependency')
+		async processEvent() {
+			expect(Context.getContextVariable('foo')).toBe('baz');
+		}
+	}
+	await Context.startSubContext(LIFECYCLE_SCOPES.EXECUTION, async () => {
+		const fakeLambda = new FakeLambda();
+
+		await Context.startSubContext(LIFECYCLE_SCOPES.EVENT, async () => {
+			await fakeLambda.processEvent();
+		});
+		expect(Context.getContextVariable('foo')).toBe('bar');
+	});
+});
+
 it('Should handle transient injectables', async () => {
 	@AutoRegisterInjectable
 	@Injectable({

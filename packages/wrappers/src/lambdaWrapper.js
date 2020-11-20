@@ -1,5 +1,7 @@
 import { Context, LIFECYCLE_SCOPES, logger } from 'scoped-lambda-context';
 
+export const INVOKED_FUNCTION_ARN_PARTS_EXTRACTOR = /^arn:aws:lambda:(?<region>.+):(?<accountId>.+):function:(?<functionName>.+):(?<alias>.+)$/;
+
 export default class LambdaWrappper {
 	static wrapClass(clazz, ...clazzConstructionOpts) {
 		const parentContext = Context.createParentContext(LIFECYCLE_SCOPES.EXECUTION);
@@ -43,9 +45,9 @@ export default class LambdaWrappper {
 		Context.setContextVariable('EVENT', event);
 		Context.setContextVariable('AWS_EVENT_CONTEXT', awsContext);
 		const { groups: { alias } } = awsContext.invokedFunctionArn
-			.match(/^arn:aws:lambda:(?<region>.+):(?<accountId>.+):function:(?<functionName>.+):(?<alias>.+)$/);
+			.match(INVOKED_FUNCTION_ARN_PARTS_EXTRACTOR);
 		Context.setContextVariable('ALIAS', alias);
-		Context.setContextVariable('EVENT_ALIAS', alias);
+		Context.setContextVariable('CORRELATION_ID', awsContext.awsRequestId);
 		logger.debug('Initialized event context');
 	}
 }

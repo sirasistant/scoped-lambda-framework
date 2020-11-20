@@ -29,9 +29,9 @@ jobs:
   include:
     # Pull request
     - stage: lint
-      script: npx lerna exec -- npm i && npx lerna run lint
+      script: npx lerna exec -- npm i && npx lerna bootstrap && npx lerna run lint
     - stage: test (unit)
-      script: npx lerna exec -- npm i && npx lerna run test:unit
+      script: npx lerna exec -- npm i && npx lerna bootstrap && npx lerna run test:unit
 
     # Merge on main
     - stage: publish

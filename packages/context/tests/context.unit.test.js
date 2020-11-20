@@ -15,11 +15,8 @@ it('Should not be constructable', async () => {
 
 it('Should allow to create hierarchical contexts', async () => {
 	await Context.startSubContext(LIFECYCLE_SCOPES.EXECUTION, async () => {
-		Context.setContextVariable('foo', 'bar');
 		await Context.startSubContext(LIFECYCLE_SCOPES.EVENT, async () => {
-			Context.setContextVariable('foo', 'baz');
 			await Promise.all(new Array(5).fill().map((_, idx) => Context.startSubContext(LIFECYCLE_SCOPES.RECORD, async () => {
-				Context.setContextVariable('alias', `next${idx}`);
 				await (async () => {
 					expect(Context.getContextVariable('alias')).toBe(`next${idx}`);
 					expect([...Context.getContextHierarchy()].map((ctx) => Context.getContextName(ctx))).toEqual([
@@ -28,11 +25,17 @@ it('Should allow to create hierarchical contexts', async () => {
 						LIFECYCLE_SCOPES.EXECUTION,
 					]);
 				})();
+			}, () => {
+				Context.setContextVariable('alias', `next${idx}`);
 			})));
 			expect(Context.getContextVariable('alias')).not.toBeDefined();
 			expect(Context.getContextVariable('foo')).toBe('baz');
+		}, () => {
+			Context.setContextVariable('foo', 'baz');
 		});
 		expect(Context.getContextVariable('foo')).toBe('bar');
+	}, () => {
+		Context.setContextVariable('foo', 'bar');
 	});
 });
 

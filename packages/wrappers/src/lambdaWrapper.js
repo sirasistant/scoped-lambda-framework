@@ -1,4 +1,4 @@
-import { Context, LIFECYCLE_SCOPES } from 'scoped-lambda-context';
+import { Context, LIFECYCLE_SCOPES, logger } from 'scoped-lambda-context';
 
 export default class LambdaWrappper {
 	static wrapClass(clazz, ...clazzConstructionOpts) {
@@ -8,15 +8,15 @@ export default class LambdaWrappper {
 	}
 
 	constructor(Clazz, parentContext, clazzConstructionOpts) {
-		this.parentContextInitialized = false;
+		this.rootContextInitialized = false;
 		this.instance = new Clazz(...clazzConstructionOpts);
 		this.parentContext = parentContext;
 		this.externalInterface = Context.bindToParentContext(this.externalInterface.bind(this), parentContext);
 	}
 
 	async externalInterface(event, awsContext) {
-		if (!this.parentContextInitialized) {
-			await this.initializeParentContext();
+		if (!this.rootContextInitialized) {
+			await this.initializeRootContext();
 		}
 		return Context.startSubContext(
 			LIFECYCLE_SCOPES.EVENT,
@@ -26,22 +26,26 @@ export default class LambdaWrappper {
 	}
 
 	async handleAwsEvent(event, awsContext) {
+		logger.debug('Processing event', event, awsContext);
 		return this.instance.processEvent(event, awsContext);
 	}
 
-	async initializeParentContext() {
+	async initializeRootContext() {
 		Context.setContextVariable('ACCOUNT_ID', process.env.ACCOUNT_ID);
 		Context.setContextVariable('REGION', process.env.AWS_REGION);
 		Context.setContextVariable('STAGE', process.env.STAGE);
 		Context.setContextVariable('VERSION', process.env.AWS_LAMBDA_FUNCTION_VERSION);
-		this.parentContextInitialized = true;
+		logger.debug('Initialized root context');
+		this.rootContextInitialized = true;
 	}
 
 	async initializeEventContext(event, awsContext) {
 		Context.setContextVariable('EVENT', event);
 		Context.setContextVariable('AWS_EVENT_CONTEXT', awsContext);
-		const { alias } = awsContext.invokedFunctionArn
+		const { groups: { alias } } = awsContext.invokedFunctionArn
 			.match(/^arn:aws:lambda:(?<region>.+):(?<accountId>.+):function:(?<functionName>.+):(?<alias>.+)$/);
 		Context.setContextVariable('ALIAS', alias);
+		Context.setContextVariable('EVENT_ALIAS', alias);
+		logger.debug('Initialized event context');
 	}
 }

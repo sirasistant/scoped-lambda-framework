@@ -63,19 +63,21 @@ export default class Context {
 		if (!parentContext.isParent) {
 			throw new Error('Cannot bind to non-parent context');
 		}
-		return (...args) => {
-			contextNamespace.enter(parentContext);
-			try {
-				return fn(...args);
-			} catch (exception) {
-				if (exception) {
-					exception[cls.ERROR_SYMBOL] = parentContext;
-				}
-				throw exception;
-			} finally {
-				contextNamespace.exit(parentContext);
+		return (...args) => this.runWithinContext(() => fn(...args), parentContext);
+	}
+
+	static runWithinContext(fn, context) {
+		contextNamespace.enter(context);
+		try {
+			return fn();
+		} catch (exception) {
+			if (exception) {
+				exception[cls.ERROR_SYMBOL] = context;
 			}
-		};
+			throw exception;
+		} finally {
+			contextNamespace.exit(context);
+		}
 	}
 
 	static* getContextHierarchy() {

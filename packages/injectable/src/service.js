@@ -9,7 +9,7 @@ export default class Service {
 			const context = parentContexts[i];
 			const parentContext = parentContexts[i - 1] || null;
 			const contextName = Context.getContextName(context);
-			await this.onContextStart(contextName, context, parentContext);
+			await Context.runWithinContext(() => this.onContextStart(contextName, context, parentContext), context);
 		}
 	}
 

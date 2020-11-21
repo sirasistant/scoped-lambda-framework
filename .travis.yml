@@ -29,10 +29,20 @@ jobs:
   include:
     # Pull request
     - stage: lint
-      script: npx lerna exec -- npm ci && npx lerna bootstrap && npx lerna run lint
+      script: 
+        npx lerna exec -- npm ci && 
+        npx lerna bootstrap && 
+        npx lerna run lint
     - stage: test (unit)
-      script: npx lerna exec -- npm ci && npx lerna bootstrap && npx lerna run test:unit
+      script: 
+        npx lerna exec -- npm ci && 
+        npx lerna bootstrap && 
+        npx lerna run test:unit
 
     # Merge on main
     - stage: publish
-      script: git checkout main && npx lerna exec -- npm ci && npx lerna publish --contents dist --yes
+      script: 
+        git remote set-url origin "https://$GH_USER:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git" && 
+        git checkout main && 
+        npx lerna exec -- npm ci && 
+        npx lerna publish --contents dist --yes

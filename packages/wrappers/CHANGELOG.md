@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/sirasistant/scoped-lambda-framework/compare/scoped-lambda-wrappers@1.2.0...scoped-lambda-wrappers@1.2.1) (2020-11-21)
+
+
+### Bug Fixes
+
+* **wrappers:** fixed alias extraction ([42ef2d8](https://github.com/sirasistant/scoped-lambda-framework/commit/42ef2d8a4ea8d093765a77d8eb16f5a8aab5cb86))
+
+
+
+
+
 # 1.2.0 (2020-11-20)
 
 

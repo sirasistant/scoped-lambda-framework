@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/sirasistant/scoped-lambda-framework/compare/scoped-lambda-wrappers@1.2.1...scoped-lambda-wrappers@1.3.0) (2020-11-21)
+
+
+### Features
+
+* **common:** allow injectables to simulate lifecycle events within proper ctx ([72443f3](https://github.com/sirasistant/scoped-lambda-framework/commit/72443f33a297dd27183a2fc87c02f208f3ad5100))
+
+
+
+
+
 ## [1.2.1](https://github.com/sirasistant/scoped-lambda-framework/compare/scoped-lambda-wrappers@1.2.0...scoped-lambda-wrappers@1.2.1) (2020-11-21)
 
 

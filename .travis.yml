@@ -42,8 +42,9 @@ jobs:
     # Merge on main
     - stage: publish
       script: 
-        echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc &&
         git remote set-url origin "https://$GH_USER:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git" && 
         git checkout main && 
+        echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc &&
+        npm whoami
         npx lerna exec -- npm ci && 
-        npx lerna publish --contents dist --yes
+        npx lerna publish --contents dist --yes --no-verify-access

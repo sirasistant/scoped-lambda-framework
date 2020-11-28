@@ -46,6 +46,7 @@ it('Should call lifecycle events', async () => {
 	};
 	let executionContext;
 	let eventContext;
+
 	await Context.startSubContext(LIFECYCLE_SCOPES.EXECUTION, async () => {
 		executionContext = Context.getCurrentContext();
 		Context.setContextVariable('foo', variableWithLifecycle);

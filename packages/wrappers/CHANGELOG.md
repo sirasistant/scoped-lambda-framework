@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.3](https://github.com/sirasistant/scoped-lambda-framework/compare/scoped-lambda-wrappers@1.3.2...scoped-lambda-wrappers@1.3.3) (2021-06-05)
+
+
+### Bug Fixes
+
+* **build:** fixes build to leave the package-locks consistent after release ([07b548e](https://github.com/sirasistant/scoped-lambda-framework/commit/07b548e9ad7c30d3d9d450941173e300bdee0164))
+* **build:** wrong command ([c68674f](https://github.com/sirasistant/scoped-lambda-framework/commit/c68674fef2419a803a4c198852e4cd1f3e56da90))
+
+
+
+
+
 ## [1.3.2](https://github.com/sirasistant/scoped-lambda-framework/compare/scoped-lambda-wrappers@1.3.1...scoped-lambda-wrappers@1.3.2) (2021-06-05)
 
 

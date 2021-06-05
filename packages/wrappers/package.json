@@ -1,11 +1,11 @@
 {
 	"name": "scoped-lambda-wrappers",
-	"version": "1.3.3",
+	"version": "1.3.4",
 	"description": "",
 	"main": "index.js",
 	"dependencies": {
-		"scoped-lambda-context": "^1.3.2",
-		"scoped-lambda-injectable": "^1.3.3"
+		"scoped-lambda-context": "^1.3.3",
+		"scoped-lambda-injectable": "^1.3.4"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.0.0",

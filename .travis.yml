@@ -41,10 +41,14 @@ jobs:
 
     # Merge on main
     - stage: publish
-      script: 
+      script: >-
         git remote set-url origin "https://$GH_USER:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git" && 
         git checkout main && 
         echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc &&
         npm whoami
         npx lerna exec -- npm ci && 
-        npx lerna publish --contents dist --yes --no-verify-access
+        npx lerna publish --contents dist --yes --no-verify-access &&
+        lerna clean --yes && lerna exec "npm install --ignore-scripts --package-lock-only --no-audit" &&
+        git add packages/*/package-lock.json &&
+        git commit -m "[skip ci] chore(build): update package-lock files" &&
+        git push origin HEAD:main

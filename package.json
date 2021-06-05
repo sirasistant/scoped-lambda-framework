@@ -25,7 +25,7 @@
 		"lerna": "^3.22.1"
 	},
 	"scripts": {
-		"version": "lerna clean --yes && lerna bootstrap --ignore-scripts -- --package-lock-only --no-audit",
+		"version": "lerna clean --yes && lerna exec \"npm install --ignore-scripts --package-lock-only --no-audit\"",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
